@@ -12,6 +12,10 @@ FIXME: explanation
 
     $ java -jar lifescope-stats-0.1.0-standalone.jar [args]
 
+### Start the web server
+
+`lein ring server-headless`
+
 ## Options
 
 FIXME: listing of options this app accepts.
