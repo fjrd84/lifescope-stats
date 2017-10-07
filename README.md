@@ -1,40 +1,36 @@
 # lifescope-stats
 
-FIXME: description
+Stats module for the [lifescope-project](https://www.lifescope-project.com).
 
 ## Installation
 
-Download from http://example.com/FIXME.
+You need [Leiningen](https://leiningen.org/) to run, build and test this project.
 
-## Usage
+## Build it
 
-FIXME: explanation
+Build the project with the following command:
 
-    $ java -jar lifescope-stats-0.1.0-standalone.jar [args]
+    lein uberjar 
+
+It will generate a `.jar` file into the subdirectory `./target/uberjar/`.
+
+## Run it 
+
+Run the standalone jar file:
+
+    java -jar lifescope-stats-0.1.0-standalone.jar
+
+Alternatively, you can directly run the project using leiningen with the following command:
+
+    lein run
 
 ### Start the web server
 
-`lein ring server-headless`
+Type this command on the shell: `lein ring server-headless`.
 
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
 
 ## License
 
-Copyright © 2017 FIXME
+Copyright © 2017
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the Eclipse Public License either version 1.0.
