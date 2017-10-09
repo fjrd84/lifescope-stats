@@ -1,4 +1,4 @@
-(ns restful-clojure.handler
+(ns lifescope-stats.rest
   (:use compojure.core
         ring.middleware.json)
   (:require [compojure.handler :as handler] 
@@ -18,7 +18,6 @@
    (response {:message "Page not found"}))
   )
 
-
 ; Middleware: logger
 (defn wrap-log-request [handler]
   (fn [req]
@@ -31,3 +30,5 @@
        wrap-json-response
        wrap-json-body
        ))
+
+
