@@ -1,16 +1,9 @@
 (ns lifescope-stats.core
   (:require [compojure.core :refer :all]
-            [compojure.route :as route]))
+            [compojure.route :as route]
+            [lifescope-stats.rest :refer :all]
+            [ring.adapter.jetty :as jetty]))
 
-(use 'ring.adapter.jetty)
 
-(defn app-handler [request]
-  {:status 200
-   :headers {"Content-Type" "text/plain;=us-ascii"}
-   :body (str request)})
-
-(defn -main
-  "Start the demo server."
-  [& args]
-  (run-jetty app-handler {:port 3000}))
-
+(defn -main []
+  (jetty/run-jetty app {:port 3000}))
