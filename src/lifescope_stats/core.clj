@@ -1,7 +1,5 @@
 (ns lifescope-stats.core
-  (:require [compojure.core :refer :all]
-            [compojure.route :as route]
-            [clojurewerkz.elastisch.rest :as esr]
+  (:require [clojurewerkz.elastisch.rest :as esr]
             [lifescope-stats.rest :refer :all]
             [ring.adapter.jetty :as jetty]))
 
