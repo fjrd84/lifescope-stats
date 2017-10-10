@@ -21,7 +21,7 @@
 ; Middleware: logger
 (defn wrap-log-request [handler]
   (fn [req]
-    [println req]
+    (println req)
     (handler req)))
 
 (def app
