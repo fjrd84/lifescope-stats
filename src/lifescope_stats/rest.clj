@@ -1,6 +1,6 @@
 (ns lifescope-stats.rest
-  (:use compojure.core
-        ring.middleware.json)
+  (:use [compojure.core] 
+        [ring.middleware.json]) 
   (:require [compojure.handler :as handler] 
             [ring.util.response :refer [response]]
             [compojure.route :as route]))
