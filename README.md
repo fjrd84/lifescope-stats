@@ -28,6 +28,16 @@ Alternatively, you can directly run the project using leiningen with the followi
 
 Type this command on the shell: `lein ring server-headless`.
 
+## Quality indicators
+
+
+- `lein eastwood` run the linter
+- `lein cloverage` analyze the test coverage
+- `lein ancient` search for outdated dependencies
+- `lein kibit` analyze the code and suggest more idiomatic variants
+- `lein bikeshed` analyze the formatting of the source files
+- `lein omni` run all the quality analyzers (eastwood, cloverage, ancient, kibit and bikeshed).
+
 
 ## License
 
