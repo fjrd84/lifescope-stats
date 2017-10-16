@@ -1,0 +1,8 @@
+{
+  :elastic {
+    :url "http://127.0.0.1:9200"
+    :user "elastic"
+    :password "changeme"
+  }
+  :port 7009
+}
