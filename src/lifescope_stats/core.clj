@@ -3,8 +3,12 @@
             [lifescope-stats.rest :refer :all]
             [ring.adapter.jetty :as jetty]))
 
+; Read the configuration file
+(def config (read-string (slurp "config.clj")))
+
 
 (defn -main []
-  (let [conn (esr/connect "http://127.0.0.1:9200"
-                          {:basic-auth ["elastic" "changeme"]})])
-  (jetty/run-jetty app {:port 7000}))
+  (let [conn (esr/connect (:url (:elastic config))
+                          {:basic-auth [(:user (:elastic config))
+                                        (:password (:elastic config))]})])
+  (jetty/run-jetty app {:port (:port config)}))
