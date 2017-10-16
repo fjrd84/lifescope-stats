@@ -6,6 +6,10 @@ Stats module for the [lifescope-project](https://www.lifescope-project.com).
 
 You need [Leiningen](https://leiningen.org/) to run, build and test this project.
 
+## Create a configuration file
+
+Before running this project, you need to create your own configuration file. There's an example configuration file named `config.clj.example`. Just copy it to the file `config.clj` and define the configuration properties of your environment.
+
 ## Build it
 
 Build the project with the following command:
