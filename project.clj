@@ -24,7 +24,7 @@
                  [ring-mock "0.1.5"]
                  [ring/ring-json "0.2.0"]
                  [ring/ring-jetty-adapter "1.2.1"]
-                 [clojurewerkz/elastisch "3.0.0-beta2"]
+                 [clojurewerkz/elastisch "2.2.0"]
                  [compojure "1.6.0"]]
 
   :main ^:skip-aot lifescope-stats.core
