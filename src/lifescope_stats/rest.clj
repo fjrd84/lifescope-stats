@@ -23,12 +23,6 @@
         hits (esrsp/hits-from res)]
     (pp/pprint hits)))
 
-(defn- str-to [num]
-  (apply str (interpose ", " (range 1 (inc num)))))
-
-(defn- str-from [num]
-  (apply str (interpose ", " (reverse (range 1 (inc num))))))
-
 (defroutes app-routes
   (GET "/" [] (response {:message "Lifescope Stats API"}))
   (GET "/search/:word" [word]
@@ -37,7 +31,7 @@
   (route/not-found
    (response {:message "Page not found"})))
 
-                                        ; Middleware: logger
+; Middleware: logger
 (defn wrap-log-request [handler]
   (fn [req]
     (println req)
