@@ -18,16 +18,17 @@
                                      (:password (:elastic config))]}))
 
 (defn wildcard-search [search-word]
-  (let [res  (esd/search conn "analysis" "" :query 
-                         (q/wildcard :query (str search-word "*")))
-        hits (esrsp/hits-from res)]
-    (pp/pprint hits)))
+  (->   (esd/search conn 
+                    "analysis" 
+                    "" 
+                    :query 
+                    (q/wildcard :query (str search-word "*")))
+        esrsp/hits-from))
 
 (defroutes app-routes
   (GET "/" [] (response {:message "Lifescope Stats API"}))
   (GET "/search/:word" [word]
-       (response (esd/search conn "analysis" :query
-                             (q/term :source word))))
+       (response (wildcard-search word)))
   (route/not-found
    (response {:message "Page not found"})))
 
