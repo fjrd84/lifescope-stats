@@ -17,11 +17,10 @@
                        {:basic-auth [(:user (:elastic config))
                                      (:password (:elastic config))]}))
 
-(defn testme [] (let [res  (esd/search conn "analysis" (q/term :source "twitter"))
+(defn testme [] (let [res  (esd/search conn "analysis" "" :query (q/term :source "twitter"))
                       n    (esrsp/total-hits res)
                       hits (esrsp/hits-from res)]
                   (println (format "Total hits: %d" n))
-                  (println (format "Test:" res))
                   (pp/pprint hits)))
 
 (defn- str-to [num]
