@@ -17,11 +17,11 @@
                        {:basic-auth [(:user (:elastic config))
                                      (:password (:elastic config))]}))
 
-(defn testme [] (let [res  (esd/search conn "analysis" "" :query (q/term :source "twitter"))
-                      n    (esrsp/total-hits res)
-                      hits (esrsp/hits-from res)]
-                  (println (format "Total hits: %d" n))
-                  (pp/pprint hits)))
+(defn wildcard-search [search-word]
+  (let [res  (esd/search conn "analysis" "" :query 
+                         (q/wildcard :query (str search-word "*")))
+        hits (esrsp/hits-from res)]
+    (pp/pprint hits)))
 
 (defn- str-to [num]
   (apply str (interpose ", " (range 1 (inc num)))))
