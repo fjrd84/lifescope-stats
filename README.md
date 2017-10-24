@@ -41,6 +41,8 @@ Type this command on the shell: `lein ring server-headless`.
 - `lein kibit` analyze the code and suggest more idiomatic variants
 - `lein bikeshed` analyze the formatting of the source files
 - `lein omni` run all the quality analyzers (eastwood, cloverage, ancient, kibit and bikeshed).
+- `lein cljfmt check` check the code formatting.
+- `lein cljfmt fix` auto-fix the code formatting.
 
 
 ## License
