@@ -1,7 +1,7 @@
 (ns lifescope-stats.rest
-  (:use [compojure.core] 
-        [ring.middleware.json]) 
-  (:require [compojure.handler :as handler] 
+  (:use [compojure.core]
+        [ring.middleware.json])
+  (:require [compojure.handler :as handler]
             [ring.util.response :refer [response]]
             [clojurewerkz.elastisch.rest :as esr]
             [clojurewerkz.elastisch.rest.document :as esd]
@@ -18,17 +18,17 @@
                                      (:password (:elastic config))]}))
 
 (defn wildcard-search [search-word]
-  (->   (esd/search conn 
-                    "analysis" 
-                    "" 
-                    :query 
+  (->   (esd/search conn
+                    "analysis"
+                    ""
+                    :query
                     (q/wildcard :query (str search-word "*")))
         esrsp/hits-from))
 
 (defroutes app-routes
   (GET "/" [] (response {:message "Lifescope Stats API"}))
   (GET "/search/:word" [word]
-       (response (wildcard-search word)))
+    (response (wildcard-search word)))
   (route/not-found
    (response {:message "Page not found"})))
 
@@ -39,10 +39,8 @@
     (handler req)))
 
 (def app
-  ( -> app-routes
-       wrap-log-request
-       wrap-json-response
-       wrap-json-body
-       ))
-
+  (-> app-routes
+      wrap-log-request
+      wrap-json-response
+      wrap-json-body))
 
