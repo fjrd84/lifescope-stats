@@ -14,11 +14,11 @@ Before running this project, you need to create your own configuration file. The
 
 Build the project with the following command:
 
-    lein uberjar 
+    lein uberjar
 
 It will generate a `.jar` file into the subdirectory `./target/uberjar/`.
 
-## Run it 
+## Run it
 
 Run the standalone jar file:
 
