@@ -6,10 +6,7 @@
 
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  ; The lein-ring plugin allows us to easily start a development web server
-  ; with "lein ring server". It also allows us to package up our application
-  ; as a standalone .jar or as a .war for deployment to a servlet contianer
-  ; (I know... SO 2005).
+
   :plugins [[lein-ring "0.8.10"] [lein-auto "0.1.3"] [lein-cljfmt "0.5.7"]]
   
   ; See https://github.com/weavejester/lein-ring#web-server-options for the
