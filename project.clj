@@ -43,7 +43,7 @@
                      [lein-cloverage "1.0.9"]
                      [lein-ancient "0.6.10"]
                      [lein-kibit "0.1.5"]
-                     [cider/cider-nrepl "0.9.0"]
+                     [cider/cider-nrepl "0.16.0-SNAPSHOT"]
                      [lein-bikeshed "0.4.1"]] }
              }
   )
