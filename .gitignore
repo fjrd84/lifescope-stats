@@ -10,3 +10,4 @@ config.clj
 /.nrepl-port
 .hgignore
 .hg/
+.vscode
