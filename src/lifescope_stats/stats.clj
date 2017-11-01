@@ -51,4 +51,23 @@
         n (esrsp/total-hits res)]
     {:results hits :count n}))
 
+;; It returns a sample of 1000 elements of the elasticsearch
+(defn get-1000 []
+  (let [res (esd/search conn
+                        "analysis"
+                        ""
+                        {
+                         :query (q/term :source "twitter")
+                         :size 1000
+                         }
+                        )
+        hits (esrsp/hits-from res)
+        ] 
+    hits))
 
+(defn unique-queries []
+  (let [hits (get-1000)]
+    (distinct
+     (map :query
+      (map :_source hits)
+      ))))
