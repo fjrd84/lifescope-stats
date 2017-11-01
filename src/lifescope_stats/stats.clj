@@ -14,6 +14,18 @@
                        {:basic-auth [(:user (:elastic config))
                                      (:password (:elastic config))]}))
 
+(defn total-count []
+  (let [res (esd/search conn
+                        "analysis"
+                        ""
+                        {
+                         :query (q/term :_type "health")
+                         :size 0
+                         }
+                        )
+        n (esrsp/total-hits res)
+ ] 
+    {:count n}))
 
 (defn wildcard-search [search-word]
   (let [res (esd/search conn
@@ -39,4 +51,4 @@
         n (esrsp/total-hits res)]
     {:results hits :count n}))
 
- 
+
