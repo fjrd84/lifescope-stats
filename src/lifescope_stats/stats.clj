@@ -3,6 +3,7 @@
   (:require [clojurewerkz.elastisch.rest :as esr]
             [clojurewerkz.elastisch.rest.document :as esd]
             [clojurewerkz.elastisch.query :as q]
+            [clojurewerkz.elastisch.aggregation :as a]
             [clojurewerkz.elastisch.rest.response :as esrsp]
             [clojure.pprint :as pp]))
 
@@ -23,3 +24,19 @@
         hits (esrsp/hits-from res)
         n (esrsp/total-hits res)]
     {:results hits :count n}))
+
+(defn match-search [search-word]
+  (let [res (esd/search conn
+                        "analysis"
+                        ""
+                        {
+                         :query
+                         {
+                          :match {:_all search-word}
+                          }
+                         })
+        hits (esrsp/hits-from res)
+        n (esrsp/total-hits res)]
+    {:results hits :count n}))
+
+ 
