@@ -89,3 +89,13 @@
      (map :query
           (map :_source hits)
           ))))
+
+;; It returns a hash map with the current analysis count for each query
+(defn all-queries-count []
+  (let [queries (unique-queries)
+        counted (map #(hash-map 
+                       :query %, 
+                       :count (query-counter %)) 
+                     queries)]
+    counted
+    ))
