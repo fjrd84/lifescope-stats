@@ -8,12 +8,14 @@
 
 (defroutes app-routes
   (GET "/" [] (response {:message "Lifescope Stats API"}))
+  (GET "/query-count/" [word]
+       (response (all-queries-count)))
   (GET "/search/:word" [word]
-    (response (wildcard-search word)))
+       (response (wildcard-search word)))
   (route/not-found
    (response {:message "Page not found"})))
 
-; Middleware: logger
+;; Middleware: logger
 (defn wrap-log-request [handler]
   (fn [req]
     (println req)
