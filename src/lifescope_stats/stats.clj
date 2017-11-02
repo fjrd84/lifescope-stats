@@ -7,13 +7,15 @@
             [clojurewerkz.elastisch.rest.response :as esrsp]
             [clojure.pprint :as pp]))
 
-; Read the configuration file
+;; Read the configuration file
 (def config (read-string (slurp "config.clj")))
 
+;; Set up the connection to the elasticsearch
 (def conn (esr/connect (:url (:elastic config))
                        {:basic-auth [(:user (:elastic config))
                                      (:password (:elastic config))]}))
 
+;; Get the total count of analyzed messages in the system
 (defn total-count []
   (let [res (esd/search conn
                         "analysis"
@@ -23,10 +25,11 @@
                          :size 0
                          }
                         )
-        n (esrsp/total-hits res)
- ] 
+        n (esrsp/total-hits res) ] 
     {:count n}))
 
+
+;; Perform a wildcard search within the queries
 (defn wildcard-search [search-word]
   (let [res (esd/search conn
                         "analysis"
@@ -37,6 +40,7 @@
         n (esrsp/total-hits res)]
     {:results hits :count n}))
 
+;; Perform a generic search
 (defn match-search [search-word]
   (let [res (esd/search conn
                         "analysis"
@@ -65,9 +69,23 @@
         ] 
     hits))
 
+;; It counts how many elements have been analyzed for a given query
+(defn query-counter [query]
+  (let [res (esd/search conn
+                        "analysis"
+                        ""
+                        {
+                         :query (q/term :query query)
+                         :size 0
+                         }
+                        )
+        n (esrsp/total-hits res)]
+    n))
+
+;; It obtains a list with all the unique queries currently present in the system
 (defn unique-queries []
   (let [hits (get-1000)]
     (distinct
      (map :query
-      (map :_source hits)
-      ))))
+          (map :_source hits)
+          ))))
