@@ -4,7 +4,7 @@ services:
     build: .
     container_name: stats_backend
     ports:
-      - "127.0.0.1:7009:7009"
+      - "127.0.0.1:7009:80"
     environment:
       - VIRTUAL_HOST=health-nlp.stats.jdonado.com
       - LETSENCRYPT_EMAIL=jdonado@jdonado.com
