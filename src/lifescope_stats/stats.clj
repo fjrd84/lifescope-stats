@@ -50,19 +50,43 @@
         n (esrsp/total-hits res)]
     res))
 
+(defn find-all-problems []
+  (let [res (esd/search conn
+                        "analysis"
+                        ""
+                        {
+                         :size 0
+                         :aggregations {
+                                        :solutions {
+                                                    :terms {
+                                                            :field "analysis.problem"
+                                                            :size 50000
+                                                            }
+                                                    }
+                                        }
+                         }
+                        )
 
-;; Perform a wildcard search within the queries
+        n (esrsp/total-hits res)]
+    res))
+
+
+;; Perform a wildcard search within the queries, limited to 200 elements
 (defn wildcard-search [search-word]
   (let [res (esd/search conn
                         "analysis"
                         ""
-                        :query
-                        (q/wildcard :query (str search-word "*")))
+                        { 
+                         :query (q/wildcard :query (str search-word "*"))  
+                         :size 200
+                         }
+                        )
+
         hits (esrsp/hits-from res)
         n (esrsp/total-hits res)]
     {:results hits :count n}))
 
-;; Perform a generic search, limited to 100 elements
+;; Perform a generic search, limited to 200 elements
 (defn match-search [search-word]
   (let [res (esd/search conn
                         "analysis"
@@ -72,7 +96,7 @@
                          {
                           :match {:_all search-word}
                           }
-                         :size 100
+                         :size 200
                          })
         hits (esrsp/hits-from res)
         n (esrsp/total-hits res)]
@@ -99,7 +123,6 @@
                         ""
                         {
                          :query (q/term :query query)
-                         :size 1000
                          }
                         )
         n (esrsp/total-hits res)]
@@ -125,15 +148,6 @@
 ;; It obtains a list with all the unique queries currently present in the system
 (defn unique-queries []
   (unique-values :query))
-
-;; It obtains a list with all the single problems identified by the system
-(defn unique-problems []
-  (unique-analysis-values :problem))
-
-;; It obtains a list with all the possible solutions identified by the system
-(defn unique-solutions []
-  (unique-analysis-values :solution))
-
 
 ;; It returns a hash map with the current analysis count for each query
 (defn all-queries-count []
