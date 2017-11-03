@@ -7,9 +7,11 @@
             [compojure.route :as route]))
 
 (defroutes app-routes
-  (GET "/" [] (response {:message "Lifescope Stats API"}))
+  (GET "/" [] (response {:message "Lifescope Stats API" :messages-count (:count (total-count))}))
   (GET "/query-count/" [word]
        (response (all-queries-count)))
+  (GET "/problems/" []
+       (response (find-all-problems)))
   (GET "/solutions/:problem" [problem]
        (response (find-solutions-to-problem problem)))
   (GET "/search/:word" [word]
