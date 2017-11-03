@@ -8,14 +8,16 @@
 
 (defroutes app-routes
   (GET "/" [] (response {:message "Lifescope Stats API" :messages-count (:count (total-count))}))
-  (GET "/query-count/" [word]
+  (GET "/queries/" [word]
        (response (all-queries-count)))
   (GET "/problems/" []
        (response (find-all-problems)))
   (GET "/solutions/:problem" [problem]
        (response (find-solutions-to-problem problem)))
-  (GET "/search/:word" [word]
+  (GET "/messages/search/:word" [word]
        (response (match-search word)))
+  (GET "/messages/match/:problem/:solution" [problem solution]
+       (response (find-problem-solution-matches problem solution)))
   (route/not-found
    (response {:message "Page not found"})))
 
