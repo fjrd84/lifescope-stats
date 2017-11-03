@@ -1,0 +1,14 @@
+version: '3'
+services:
+  stats_backend:
+    build: .
+    container_name: stats_backend
+    ports:
+      - "127.0.0.1:7009:7009"
+    networks:
+      - health-nlp-network
+networks:
+  health-nlp-network:
+    external:
+      name: health-nlp-network
+
