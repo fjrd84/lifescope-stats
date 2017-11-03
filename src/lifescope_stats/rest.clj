@@ -10,6 +10,8 @@
   (GET "/" [] (response {:message "Lifescope Stats API"}))
   (GET "/query-count/" [word]
        (response (all-queries-count)))
+  (GET "/solutions/:problem" [problem]
+       (response (find-solutions-to-problem problem)))
   (GET "/search/:word" [word]
        (response (wildcard-search word)))
   (route/not-found
