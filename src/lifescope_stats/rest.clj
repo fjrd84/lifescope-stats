@@ -13,7 +13,7 @@
   (GET "/solutions/:problem" [problem]
        (response (find-solutions-to-problem problem)))
   (GET "/search/:word" [word]
-       (response (wildcard-search word)))
+       (response (match-search word)))
   (route/not-found
    (response {:message "Page not found"})))
 
