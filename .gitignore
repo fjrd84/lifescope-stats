@@ -11,3 +11,4 @@ config.clj
 .hgignore
 .hg/
 .vscode
+.idea
