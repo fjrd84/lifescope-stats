@@ -62,7 +62,7 @@
                         ""
                         {
                          :query (q/term :source "twitter")
-                         :size 1000
+                         :size 10000
                          }
                         )
         hits (esrsp/hits-from res)
@@ -82,13 +82,35 @@
         n (esrsp/total-hits res)]
     n))
 
-;; It obtains a list with all the unique queries currently present in the system
-(defn unique-queries []
+;; It obtains a list with all the unique values for a given key
+(defn unique-values [key]
   (let [hits (get-1000)]
     (distinct
-     (map :query
+     (map key 
           (map :_source hits)
           ))))
+
+;; It obtains a list with all the unique analysis values for a given key
+(defn unique-analysis-values [key]
+  (let [hits (get-1000)]
+    (distinct
+     (map key 
+          (map :analysis
+          (map :_source hits))))))
+
+
+;; It obtains a list with all the unique queries currently present in the system
+(defn unique-queries []
+  (unique-values :query))
+
+;; It obtains a list with all the single problems identified by the system
+(defn unique-problems []
+  (unique-analysis-values :problem))
+
+;; It obtains a list with all the possible solutions identified by the system
+(defn unique-solutions []
+  (unique-analysis-values :solution))
+
 
 ;; It returns a hash map with the current analysis count for each query
 (defn all-queries-count []
