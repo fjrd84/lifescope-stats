@@ -67,6 +67,37 @@
                         )]
     res))
 
+;; Find messages for a given problem and solution
+(defn find-problem-solution-matches [problem solution]
+  (let [res (esd/search conn
+                        "analysis"
+                        ""
+                        {
+                         :query {
+                                 :bool {
+                                        :must [
+                                               {
+                                                :match {
+                                                        :analysis.problem problem
+                                                        }
+                                                }
+                                               {
+                                                :match {
+                                                        :analysis.solution solution
+                                                        }
+                                                }
+                                               ]
+                                        }
+
+                                 }
+                         }
+                        :size 10
+                        )
+
+        hits (esrsp/hits-from res)
+        ]
+    hits))
+
 
 ;; Perform a wildcard search within the queries, limited to 200 elements
 (defn wildcard-search [search-word]
@@ -155,3 +186,4 @@
                      queries)]
     counted
     ))
+
