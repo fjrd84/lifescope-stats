@@ -64,9 +64,7 @@
                                                     }
                                         }
                          }
-                        )
-
-        n (esrsp/total-hits res)]
+                        )]
     res))
 
 
