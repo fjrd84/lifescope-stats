@@ -28,6 +28,28 @@
         n (esrsp/total-hits res) ] 
     {:count n}))
 
+;; Aggregate all the solutions for a specific problem
+(defn find-solutions-to-problem [problem]
+  (let [res (esd/search conn
+                        "analysis"
+                        ""
+                        {
+                         :query (q/wildcard :analysis.problem (str problem "*"))
+                         :size 0
+                         :aggregations {
+                                        :solutions {
+                                                    :terms {
+                                                            :field "analysis.solution"
+                                                            :size 100
+                                                            }
+                                                    }
+                                        }
+                         }
+                        )
+
+        n (esrsp/total-hits res)]
+    res))
+
 
 ;; Perform a wildcard search within the queries
 (defn wildcard-search [search-word]
@@ -40,7 +62,7 @@
         n (esrsp/total-hits res)]
     {:results hits :count n}))
 
-;; Perform a generic search
+;; Perform a generic search, limited to 100 elements
 (defn match-search [search-word]
   (let [res (esd/search conn
                         "analysis"
@@ -50,6 +72,7 @@
                          {
                           :match {:_all search-word}
                           }
+                         :size 100
                          })
         hits (esrsp/hits-from res)
         n (esrsp/total-hits res)]
@@ -62,7 +85,7 @@
                         ""
                         {
                          :query (q/term :source "twitter")
-                         :size 10000
+                         :size 1000
                          }
                         )
         hits (esrsp/hits-from res)
@@ -76,7 +99,7 @@
                         ""
                         {
                          :query (q/term :query query)
-                         :size 0
+                         :size 1000
                          }
                         )
         n (esrsp/total-hits res)]
@@ -96,7 +119,7 @@
     (distinct
      (map key 
           (map :analysis
-          (map :_source hits))))))
+               (map :_source hits))))))
 
 
 ;; It obtains a list with all the unique queries currently present in the system
