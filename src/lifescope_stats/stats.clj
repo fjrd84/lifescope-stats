@@ -40,16 +40,15 @@
                                         :solutions {
                                                     :terms {
                                                             :field "analysis.solution"
-                                                            :size 100
+                                                            :size 1000
                                                             }
                                                     }
                                         }
                          }
-                        )
-
-        n (esrsp/total-hits res)]
+                        )]
     res))
 
+;; Aggregate all the problems identified ever by the system
 (defn find-all-problems []
   (let [res (esd/search conn
                         "analysis"
