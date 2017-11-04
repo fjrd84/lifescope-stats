@@ -67,6 +67,24 @@
                         )]
     res))
 
+(defn find-all-queries []
+  (let [res (esd/search conn
+                        "analysis"
+                        ""
+                        {
+                         :size 0
+                         :aggregations {
+                                        :queries {
+                                                    :terms {
+                                                            :field "query"
+                                                            :size 50000
+                                                            }
+                                                    }
+                                        }
+                         }
+                        )]
+    res))
+
 ;; Find messages for a given problem and solution
 (defn find-problem-solution-matches [problem solution]
   (let [res (esd/search conn
@@ -130,6 +148,8 @@
         n (esrsp/total-hits res)]
     {:results hits :count n}))
 
+
+;; DEPRECATED
 ;; It returns a sample of 1000 elements of the elasticsearch
 (defn get-1000 []
   (let [res (esd/search conn
@@ -144,6 +164,7 @@
         ] 
     hits))
 
+;; DEPRECATED
 ;; It counts how many elements have been analyzed for a given query
 (defn query-counter [query]
   (let [res (esd/search conn
@@ -156,6 +177,7 @@
         n (esrsp/total-hits res)]
     n))
 
+;; DEPRECATED
 ;; It obtains a list with all the unique values for a given key
 (defn unique-values [key]
   (let [hits (get-1000)]
@@ -164,6 +186,7 @@
           (map :_source hits)
           ))))
 
+;; DEPRECATED
 ;; It obtains a list with all the unique analysis values for a given key
 (defn unique-analysis-values [key]
   (let [hits (get-1000)]
@@ -173,10 +196,12 @@
                (map :_source hits))))))
 
 
+;; DEPRECATED
 ;; It obtains a list with all the unique queries currently present in the system
 (defn unique-queries []
   (unique-values :query))
 
+;; DEPRECATED
 ;; It returns a hash map with the current analysis count for each query
 (defn all-queries-count []
   (let [queries (unique-queries)

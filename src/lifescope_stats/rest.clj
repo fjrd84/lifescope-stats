@@ -10,7 +10,7 @@
   (GET "/" [] (response {:message "Lifescope Stats API"
                          :messages-count (total-count)}))
   (GET "/queries" [word]
-       (response (all-queries-count)))
+       (response (find-all-queries)))
   (GET "/problems" []
        (response (find-all-problems)))
   (GET "/solutions/:problem" [problem]
