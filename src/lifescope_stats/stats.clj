@@ -110,6 +110,24 @@
                         )]
     (:buckets (:problems (:aggregations res)))))
 
+(defn find-all-profiles []
+  (let [res (esd/search conn
+                        "analysis"
+                        ""
+                        {
+                         :size 0
+                         :aggregations {
+                                        :problems {
+                                                    :terms {
+                                                            :field "analysis.profile"
+                                                            :size 50000
+                                                            }
+                                                    }
+                                        }
+                         }
+                        )]
+    (:buckets (:problems (:aggregations res)))))
+
 (defn find-all-queries []
   (let [res (esd/search conn
                         "analysis"
@@ -138,13 +156,13 @@
                                  :bool {
                                         :must [
                                                {
-                                                :match {
-                                                        :analysis.problem problem
+                                                :wildcard {
+                                                        :analysis.problem (str problem "*")
                                                         }
                                                 }
                                                {
-                                                :match {
-                                                        :analysis.solution solution
+                                                :wildcard {
+                                                        :analysis.solution (str solution "*")
                                                         }
                                                 }
                                                ]
