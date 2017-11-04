@@ -26,7 +26,7 @@
                          }
                         )
         n (esrsp/total-hits res) ] 
-    {:count n}))
+    n))
 
 ;; Aggregate all the solutions for a specific problem
 (defn find-solutions-to-problem [problem]
