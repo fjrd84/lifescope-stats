@@ -40,13 +40,13 @@
                                         :solutions {
                                                     :terms {
                                                             :field "analysis.solution"
-                                                            :size 1000
+                                                            :size 5000
                                                             }
                                                     }
                                         }
                          }
                         )]
-    res))
+    (:buckets (:solutions (:aggregations res)))))
 
 ;; Aggregate all the problems identified ever by the system
 (defn find-all-problems []
@@ -65,7 +65,7 @@
                                         }
                          }
                         )]
-    res))
+    (:buckets (:problems (:aggregations res)))))
 
 (defn find-all-queries []
   (let [res (esd/search conn
@@ -83,9 +83,9 @@
                                         }
                          }
                         )]
-    res))
+    (:buckets (:queries (:aggregations res)))))
 
-;; Find messages for a given problem and solution
+;; Find messages for a given problem and solution, limited to 500 elements
 (defn find-problem-solution-matches [problem solution]
   (let [res (esd/search conn
                         "analysis"
@@ -109,30 +109,14 @@
 
                                  }
                          }
-                        :size 10
+                        :size 500
                         )
 
-        hits (esrsp/hits-from res)
-        ]
-    hits))
+        hits (esrsp/hits-from res)]
+    (map :_source hits)))
 
 
-;; Perform a wildcard search within the queries, limited to 200 elements
-(defn wildcard-search [search-word]
-  (let [res (esd/search conn
-                        "analysis"
-                        ""
-                        { 
-                         :query (q/wildcard :query (str search-word "*"))  
-                         :size 200
-                         }
-                        )
-
-        hits (esrsp/hits-from res)
-        n (esrsp/total-hits res)]
-    {:results hits :count n}))
-
-;; Perform a generic search, limited to 200 elements
+;; Perform a generic search, limited to 500 elements
 (defn match-search [search-word]
   (let [res (esd/search conn
                         "analysis"
@@ -142,12 +126,25 @@
                          {
                           :match {:_all search-word}
                           }
-                         :size 200
+                         :size 500
                          })
+        hits (esrsp/hits-from res)]
+    (map :_source hits)))
+
+;; Perform a wildcard search within the queries, limited to 500 elements
+(defn wildcard-search [search-word]
+  (let [res (esd/search conn
+                        "analysis"
+                        ""
+                        { 
+                         :query (q/wildcard :query (str search-word "*"))  
+                         :size 500
+                         }
+                        )
+
         hits (esrsp/hits-from res)
         n (esrsp/total-hits res)]
     {:results hits :count n}))
-
 
 ;; DEPRECATED
 ;; It returns a sample of 1000 elements of the elasticsearch
