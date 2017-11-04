@@ -56,7 +56,7 @@
                         {
                          :size 0
                          :aggregations {
-                                        :solutions {
+                                        :problems {
                                                     :terms {
                                                             :field "analysis.problem"
                                                             :size 50000
