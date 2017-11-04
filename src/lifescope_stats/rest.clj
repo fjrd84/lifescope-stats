@@ -9,7 +9,13 @@
 (defroutes app-routes
   (GET "/" [] (response {:message "Lifescope Stats API"
                          :messages-count (total-count)}))
-  (GET "/queries" [word]
+  (GET "/histogram/days" []
+       (response (days-histogram)))
+  (GET "/histogram/weeks" []
+       (response (weeks-histogram)))
+  (GET "/histogram/months" []
+       (response (months-histogram)))
+  (GET "/queries" []
        (response (find-all-queries)))
   (GET "/problems" []
        (response (find-all-problems)))

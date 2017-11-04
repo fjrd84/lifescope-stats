@@ -28,6 +28,49 @@
         n (esrsp/total-hits res) ] 
     n))
 
+;; Generate a date histogram about the analyzed messages in the system
+(defn date-histogram [from interval]
+  (let [res (esd/search conn
+                        "analysis"
+                        ""
+                        {
+                         :query {
+                                 :range {
+                                         :created_at {
+                                                      :from from
+                                                      :to "now"
+                                                      }
+                                         }
+                                 }
+
+                         :size 0
+                         
+                         :aggregations {
+
+                                        :intervals {
+                                                    
+                                                    :date_histogram {
+                                                                     :field "created_at"
+                                                                     :interval interval
+                                                                     }
+                                                    }
+                                        }
+                         }
+                        )]
+    (:buckets (:intervals (:aggregations res)))))
+
+;; Generate a histogram about the last 5 months
+(defn months-histogram []
+  (date-histogram "now-6M" "month"))
+
+;; Generate a histogram about the last month
+(defn weeks-histogram []
+  (date-histogram "now-1M" "week"))
+
+;; Generate a histogram about the last week
+(defn days-histogram []
+  (date-histogram "now-7d" "day"))
+
 ;; Aggregate all the solutions for a specific problem
 (defn find-solutions-to-problem [problem]
   (let [res (esd/search conn
