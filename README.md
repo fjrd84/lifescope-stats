@@ -1,6 +1,6 @@
 # lifescope-stats
 
-Stats module for the [lifescope-project](https://www.lifescope-project.com).
+Stats module for the [lifescope-project](https://www.lifescope-project.com). This project provides a REST API allowing for external queries to the elasticsearch.
 
 ## Installation
 
@@ -17,6 +17,10 @@ Build the project with the following command:
     lein uberjar
 
 It will generate a `.jar` file into the subdirectory `./target/uberjar/`.
+
+## Elasticsearch
+
+You need a working instance of elasticsearch for the REST API to work. In order to configure the required mappings, you need to run the ´./setup-elasticsearch.sh´ script on the root directory of this repository. Make sure to edit it in case you need specific changes on your environment (URL of the elasticsearch and authentication).
 
 ## Run it
 
