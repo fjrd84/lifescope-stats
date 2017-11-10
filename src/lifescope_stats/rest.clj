@@ -28,14 +28,28 @@
   (route/not-found
    (response {:message "Page not found"})))
 
-;; Middleware: logger
-(defn wrap-log-request [handler]
+(defn wrap-log-request 
+  "Middleware: logger"
+  [handler]
   (fn [req]
     (println req)
     (handler req)))
 
+(defn allow-cors
+  "Middleware to allow cross origin requests"
+  [handler]
+  (fn [request]
+    (let [response (handler request)]
+      (-> response
+          (assoc-in [:headers "Access-Control-Allow-Origin"] "*")
+          (assoc-in [:headers "Access-Control-Allow-Methods"] "GET,OPTIONS")
+          (assoc-in [:headers "Access-Control-Allow-Headers"] "X-Requested-Widh,Content-Type,Cache-Control")
+          ))))
+
+
 (def app
   (-> app-routes
+      allow-cors
       wrap-log-request
       wrap-json-response
       wrap-json-body))
